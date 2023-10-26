@@ -1,62 +1,76 @@
-import { Entity, CreateDateColumn,PrimaryGeneratedColumn,UpdateDateColumn,DeleteDateColumn,Column,BeforeInsert,BeforeUpdate} from "typeorm";
+import { Entity, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, DeleteDateColumn, Column, BeforeInsert, BeforeUpdate } from "typeorm";
 
-@Entity('departament',{schema:'departamentos'})
+@Entity('departament', { schema: 'departamentos' })
 
-export class DepartamentEntity{
+export class DepartamentEntity {
     @PrimaryGeneratedColumn('uuid')
-    id:string;
+    id: string;
     @CreateDateColumn({
-        name:'create_at',
-        type:'timestamp',
-        default: ()=> 'CURRENT_TIMESTAMP',
-
+        name: 'create_at',
+        type: 'timestamp',
+        default: () => 'CURRENT_TIMESTAMP',
     })
-    createAT:Date;
+    createAT: Date;
 
     @UpdateDateColumn({
-        name:'update_at',
-        type:'timestamp',
-        default: ()=> 'CURRENT_TIMESTAMP',
-
+        name: 'update_at',
+        type: 'timestamp',
+        default: () => 'CURRENT_TIMESTAMP',
     })
-    updateAT:Date;
+    updateAT: Date;
 
     @DeleteDateColumn({
-        name:'delete_at',
-        type:'timestamp',
-        nullable:true,
-
+        name: 'delete_at',
+        type: 'timestamp',
+        nullable: true,
     })
-    deleteAT:Date;
+    deleteAT: Date;
 
-    @Column('varchar',{
-        name:'name',
+    @Column('varchar', {
+        name: 'name',
         nullable: false,
-        comment:'category name'
+        comment: 'departament name'
     })
-    name:string;
+    name: string;
 
-    @Column('varchar',{
-        name:'description',
-        nullable:false,
-        comment:'category description'
+    @Column('varchar', {
+        name: 'description',
+        nullable: false,
+        comment: 'departament description'
     })
-    description:string;
-    
+    description: string;
+
+    @Column('varchar', {
+        name: 'location',
+        nullable: false,
+        comment: 'departament location'
+    })
+    location: string;
+
     @BeforeInsert()
     @BeforeUpdate()
-    async setName(){
-    if (!this.name){
-        return;
+    async setName() {
+        if (!this.name) {
+            return;
+        }
+        this.name = this.name.toUpperCase();
     }
-    this.name = this.name.toUpperCase();
-}
+
     @BeforeInsert()
     @BeforeUpdate()
-    async setDescrition(){
-    if (!this.description){
-        return;
+    async setDescrition() {
+        if (!this.description) {
+            return;
+        }
+        this.description = this.description.toUpperCase();
     }
-    this.description = this.description.toUpperCase();
-}
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    async setLocation() {
+        if (!this.location) {
+            return;
+        }
+        this.location = this.location.toUpperCase();
+    }
 }
