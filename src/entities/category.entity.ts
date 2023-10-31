@@ -1,4 +1,5 @@
-import { Entity, CreateDateColumn,PrimaryGeneratedColumn,UpdateDateColumn,DeleteDateColumn,Column,BeforeInsert,BeforeUpdate} from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { ProductEntity } from './product.entity';
 
 @Entity('categories',{schema:'categorias'})
 
@@ -59,4 +60,9 @@ export class CategoryEntity{
     }
     this.description = this.description.toUpperCase();
 }
+
+//Relacion
+@OneToMany(() => ProductEntity, product => product.category)
+products: ProductEntity[];
+
 }

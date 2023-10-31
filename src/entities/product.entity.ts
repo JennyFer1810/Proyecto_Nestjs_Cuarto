@@ -1,4 +1,6 @@
-import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn,
+} from 'typeorm';
+import { CategoryEntity } from './category.entity';
 
 @Entity('products', {schema: 'ventas'})
 
@@ -89,6 +91,8 @@ export class ProductEntity{
         this.password = Bcrypt.hash(this.password, 12);
     } 
     */
-    
+    //Relacion
+    @ManyToOne(() => CategoryEntity, category => category.products)
+    category: CategoryEntity;
 
 }

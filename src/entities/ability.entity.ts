@@ -1,4 +1,5 @@
-import { Entity, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, DeleteDateColumn, Column, BeforeInsert, BeforeUpdate } from "typeorm";
+import { Entity, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, DeleteDateColumn, Column, BeforeInsert, BeforeUpdate, ManyToOne } from "typeorm";
+import { EmployeeEntity } from "./employee.entity";
 
 @Entity('ability', { schema: 'habilidades' })
 
@@ -26,6 +27,7 @@ export class AbilityEntity {
     })
     deleteAT: Date;
 
+    //Columns
     @Column('varchar', {
         name: 'name',
         nullable: false,
@@ -89,4 +91,9 @@ export class AbilityEntity {
         }
         this.certifications = this.certifications.toUpperCase();
     }
+
+    //relacion empleado - habilidad
+    @ManyToOne(() => EmployeeEntity, employee => employee.abilitys)
+    employee: EmployeeEntity;
+
 }

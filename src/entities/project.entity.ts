@@ -26,6 +26,7 @@ export class ProjectsEntity {
     })
     deleteAT: Date;
 
+    //Columns
     @Column('varchar', {
         name: 'name',
         nullable: false,

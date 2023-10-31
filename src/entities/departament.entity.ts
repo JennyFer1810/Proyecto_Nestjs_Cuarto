@@ -1,4 +1,5 @@
-import { Entity, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, DeleteDateColumn, Column, BeforeInsert, BeforeUpdate } from "typeorm";
+import { Entity, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, DeleteDateColumn, Column, BeforeInsert, BeforeUpdate, ManyToOne, ManyToMany } from "typeorm";
+import { EmployeeEntity } from "./employee.entity";
 
 @Entity('departament', { schema: 'departamentos' })
 
@@ -26,6 +27,7 @@ export class DepartamentEntity {
     })
     deleteAT: Date;
 
+    //Columns
     @Column('varchar', {
         name: 'name',
         nullable: false,
@@ -46,6 +48,7 @@ export class DepartamentEntity {
         comment: 'departament location'
     })
     location: string;
+    employees: any;
 
     @BeforeInsert()
     @BeforeUpdate()
@@ -62,7 +65,7 @@ export class DepartamentEntity {
         if (!this.description) {
             return;
         }
-        this.description = this.description.toUpperCase();
+        this.description = this.description.toLowerCase();
     }
 
     @BeforeInsert()
@@ -73,4 +76,9 @@ export class DepartamentEntity {
         }
         this.location = this.location.toUpperCase();
     }
+
+    //Relacion
+    @ManyToMany(() => EmployeeEntity, employee => employee.departaments)
+    employee: EmployeeEntity[];
+
 }

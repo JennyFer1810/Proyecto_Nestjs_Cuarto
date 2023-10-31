@@ -26,6 +26,7 @@ export class HomeworkEntity {
     })
     deleteAT: Date;
 
+    //Columns
     @Column('varchar', {
         name: 'name',
         nullable: false,
