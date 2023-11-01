@@ -1,8 +1,8 @@
 import { Entity, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, DeleteDateColumn, Column, BeforeInsert, BeforeUpdate } from "typeorm";
 
-@Entity('projects', { schema: 'proyectos' })
+@Entity('homeworks', { schema: 'company' })
 
-export class ProjectsEntity {
+export class HomeworkEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
     @CreateDateColumn({
@@ -30,35 +30,29 @@ export class ProjectsEntity {
     @Column('varchar', {
         name: 'name',
         nullable: false,
-        comment: 'projects name'
+        comment: 'homeworks name'
     })
     name: string;
 
-    @Column('date', {
-        name: 'start_date',
+    @Column('varchar', {
+        name: 'homework_status',
         nullable: false,
-        comment: 'projects start date'
+        comment: 'homeworks homework_status'
     })
-    start_date: string;
+    homework_status: string;
 
-    @Column('date', {
-        name: 'final_date',
-        nullable: false,
-        comment: 'projects final date'
-    })
-    final_date: string;
 
     @Column('varchar', {
         name: 'description',
         nullable: false,
-        comment: 'projects description'
+        comment: 'homeworks description'
     })
     description: string;
 
     @Column('varchar', {
         name: 'assigned_employee',
         nullable: false,
-        comment: 'projects assigned_employee'
+        comment: 'homeworks assigned_employee'
     })
     assigned_employee: string;
 
@@ -73,20 +67,11 @@ export class ProjectsEntity {
 
     @BeforeInsert()
     @BeforeUpdate()
-    async setStart_date() {
-        if (!this.start_date) {
+    async setHomework_status() {
+        if (!this.homework_status) {
             return;
         }
-        this.start_date = this.start_date.toUpperCase();
-    }
-
-    @BeforeInsert()
-    @BeforeUpdate()
-    async setFinal_date() {
-        if (!this.final_date) {
-            return;
-        }
-        this.final_date = this.final_date.toUpperCase();
+        this.homework_status = this.homework_status.toUpperCase();
     }
 
     @BeforeInsert()

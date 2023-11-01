@@ -1,7 +1,7 @@
 import { Entity, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, DeleteDateColumn, Column, BeforeInsert, BeforeUpdate, ManyToOne } from "typeorm";
 import { EmployeeEntity } from "./employee.entity";
 
-@Entity('ability', { schema: 'habilidades' })
+@Entity('ability', { schema: 'company' })
 
 export class AbilityEntity {
     @PrimaryGeneratedColumn('uuid')
@@ -56,6 +56,10 @@ export class AbilityEntity {
     })
     certifications: string;
 
+    //relacion empleado - habilidad
+    @ManyToOne(() => EmployeeEntity, employee => employee.abilitys)
+    employee: EmployeeEntity;
+
     @BeforeInsert()
     @BeforeUpdate()
     async setName() {
@@ -91,9 +95,4 @@ export class AbilityEntity {
         }
         this.certifications = this.certifications.toUpperCase();
     }
-
-    //relacion empleado - habilidad
-    @ManyToOne(() => EmployeeEntity, employee => employee.abilitys)
-    employee: EmployeeEntity;
-
 }

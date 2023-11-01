@@ -1,7 +1,7 @@
 import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { ProductEntity } from './product.entity';
 
-@Entity('categories',{schema:'categorias'})
+@Entity('categories',{schema:'company'})
 
 export class CategoryEntity{
     @PrimaryGeneratedColumn('uuid')

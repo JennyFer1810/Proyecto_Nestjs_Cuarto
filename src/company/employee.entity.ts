@@ -3,7 +3,7 @@ import { DepartamentEntity } from "./departament.entity";
 import { AbilityEntity } from "./ability.entity";
 import { EmployeeDataEntity } from "./employeeData.entity";
 
-@Entity('employee', { schema: 'empleados' })
+@Entity('employee', { schema: 'company' })
 
 export class EmployeeEntity {
     @PrimaryGeneratedColumn('uuid')
@@ -59,6 +59,25 @@ export class EmployeeEntity {
     phone: number;
     departaments: any;
 
+    
+    //Relacion
+    @ManyToMany(() => DepartamentEntity, departament => departament.employees)
+    @JoinTable()
+    departament: DepartamentEntity[];
+
+    //relacion empleado - habilidad
+    @OneToMany(() => AbilityEntity, ability => ability.employee)
+    abilitys: AbilityEntity[];
+
+    //relacion empleado - datos identificación
+    @OneToOne(() => EmployeeDataEntity, employeeData => employeeData.employee)
+    @JoinColumn()
+    employeeData: EmployeeDataEntity;
+
+    //onetomany se agrega el array y en esa misma fila va la palabra en plural
+    //manytomany todo en plural y en los dos va array, y se agrega en joinTable en la tabla fuerte
+    //onetoone todo singular y en la tabla fuerte se agrega el joinColumn
+
     @BeforeInsert()
     @BeforeUpdate()
     async setName() {
@@ -94,23 +113,4 @@ export class EmployeeEntity {
         }
         this.phone = this.phone.toUpperCase();
     }*/
-
-    //Relacion
-    @ManyToMany(() => DepartamentEntity, departament => departament.employees)
-    @JoinTable()
-    departament: DepartamentEntity[];
-
-    //relacion empleado - habilidad
-    @OneToMany(() => AbilityEntity, ability => ability.employee)
-    abilitys: AbilityEntity[];
-
-    //relacion empleado - datos identificación
-    @OneToOne(() => EmployeeDataEntity, employeeData => employeeData.employee)
-    @JoinColumn()
-    employeeData: EmployeeDataEntity;
-
-    //onetomany se agrega el array y en esa misma fila va la palabra en plural
-    //manytomany todo en plural y en los dos va array, y se agrega en joinTable en la tabla fuerte
-    //onetoone todo singular y en la tabla fuerte se agrega el joinColumn
-
 }

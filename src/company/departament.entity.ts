@@ -1,8 +1,9 @@
-import { Entity, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, DeleteDateColumn, Column, BeforeInsert, BeforeUpdate } from "typeorm";
+import { Entity, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, DeleteDateColumn, Column, BeforeInsert, BeforeUpdate, ManyToOne, ManyToMany } from "typeorm";
+import { EmployeeEntity } from "./employee.entity";
 
-@Entity('homeworks', { schema: 'tareas' })
+@Entity('departament', { schema: 'company' })
 
-export class HomeworkEntity {
+export class DepartamentEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
     @CreateDateColumn({
@@ -30,31 +31,28 @@ export class HomeworkEntity {
     @Column('varchar', {
         name: 'name',
         nullable: false,
-        comment: 'homeworks name'
+        comment: 'departament name'
     })
     name: string;
 
     @Column('varchar', {
-        name: 'homework_status',
-        nullable: false,
-        comment: 'homeworks homework_status'
-    })
-    homework_status: string;
-
-
-    @Column('varchar', {
         name: 'description',
         nullable: false,
-        comment: 'homeworks description'
+        comment: 'departament description'
     })
     description: string;
 
     @Column('varchar', {
-        name: 'assigned_employee',
+        name: 'location',
         nullable: false,
-        comment: 'homeworks assigned_employee'
+        comment: 'departament location'
     })
-    assigned_employee: string;
+    location: string;
+    employees: any;
+
+    //Relacion
+    @ManyToMany(() => EmployeeEntity, employee => employee.departaments)
+    employee: EmployeeEntity[];
 
     @BeforeInsert()
     @BeforeUpdate()
@@ -67,28 +65,19 @@ export class HomeworkEntity {
 
     @BeforeInsert()
     @BeforeUpdate()
-    async setHomework_status() {
-        if (!this.homework_status) {
-            return;
-        }
-        this.homework_status = this.homework_status.toUpperCase();
-    }
-
-    @BeforeInsert()
-    @BeforeUpdate()
-    async setDescription() {
+    async setDescrition() {
         if (!this.description) {
             return;
         }
-        this.description = this.description.toUpperCase();
+        this.description = this.description.toLowerCase();
     }
 
     @BeforeInsert()
     @BeforeUpdate()
-    async setAssigned_employee() {
-        if (!this.assigned_employee) {
+    async setLocation() {
+        if (!this.location) {
             return;
         }
-        this.assigned_employee = this.assigned_employee.toUpperCase();
+        this.location = this.location.toUpperCase();
     }
 }

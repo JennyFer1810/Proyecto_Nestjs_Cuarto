@@ -1,7 +1,7 @@
 import { Entity, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, DeleteDateColumn, Column, BeforeInsert, BeforeUpdate, OneToOne } from "typeorm";
 import { EmployeeEntity } from "./employee.entity";
 
-@Entity('employeeData', { schema: 'datos empleado' })
+@Entity('employeeData', { schema: 'company' })
 
 export class EmployeeDataEntity {
     @PrimaryGeneratedColumn('uuid')
@@ -63,6 +63,10 @@ export class EmployeeDataEntity {
     })
     gender: string;
 
+    //relacion empleado - datos identificación
+    @OneToOne(() => EmployeeEntity, employee => employee.employeeData)
+    employee: EmployeeEntity;
+
     @BeforeInsert()
     @BeforeUpdate()
     async setFullName() {
@@ -107,9 +111,4 @@ export class EmployeeDataEntity {
         }
         this.gender = this.gender.toUpperCase();
     }
-
-    //relacion empleado - datos identificación
-    @OneToOne(() => EmployeeEntity, employee => employee.employeeData)
-    employee: EmployeeEntity;
-
 }

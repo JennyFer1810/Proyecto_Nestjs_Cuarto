@@ -2,7 +2,7 @@ import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, DeleteDateColumn,
 } from 'typeorm';
 import { CategoryEntity } from './category.entity';
 
-@Entity('products', {schema: 'ventas'})
+@Entity('products', {schema: 'company'})
 
 export class ProductEntity{
     @PrimaryGeneratedColumn('uuid')
@@ -34,7 +34,7 @@ export class ProductEntity{
         comment: 'product title'
     })
     title: string;
-    @Column('number',{
+    @Column('numeric',{
         name: 'price',
         nullable: false,
         comment: 'product price'
